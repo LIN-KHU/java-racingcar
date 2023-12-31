@@ -1,6 +1,8 @@
 package racingcar;
 
 public class Car {
+    private static final int MIN_MOVE_SOCRE = 4;
+
     private final String name;
     private int position = 0;
 
@@ -8,5 +10,9 @@ public class Car {
         this.name = name;
     }
 
-    // 추가 기능 구현
+    public void move(int score) {
+        if (score >= MIN_MOVE_SOCRE) {
+            position++
+        }
+    }
 }
