@@ -165,7 +165,7 @@ public class Car {
 ## 📈 과제 진행 요구사항
 
 - 미션은 해당 저장소를 Fork/Clone함으로부터 시작된다.
-- **기능을 구현하기 전에 java-racingcar-precourse/docs/README.md 파일에 구현할 기능 목록을 정리**해 추가한다.
+- **기능을 구현하기 전에 java-racingcar/docs/README.md 파일에 구현할 기능 목록을 정리**해 추가한다.
 - **Git의 커밋 단위는 앞 단계에서 README.md 파일에 정리한 기능 목록 단위**로 추가한다.
 
 <br>
