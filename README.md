@@ -175,3 +175,13 @@ public class Car {
 ## 📝 License
 
 This project is [MIT](https://github.com/woowacourse/java-racingcar-precourse/blob/master/LICENSE) licensed.
+
+<br>
+
+---
+
+## 기능 목록
+
+1. 자동차 이름 입력 메소드
+2. 시도할 횟수 입력 메소드
+3. 실행 결과 및 최종 우승자 출력 메소드
