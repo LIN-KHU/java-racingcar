@@ -4,6 +4,8 @@ package racingcar;
 import camp.nextstep.edu.missionutils.Console;
 import camp.nextstep.edu.missionutils.Randoms;
 
+import java.util.ArrayList;
+import java.util.List;
 
 public class Application {
 
@@ -35,8 +37,8 @@ public class Application {
             }
         }
 
-        String winner = determineWinner(carNames, totalDistances);
-        System.out.println("\n최종 우승자: "+ winner);
+        List<String> winners = determineWinner(carNames, totalDistances);
+        System.out.println("\n최종 우승자: "+ winners);
 
     }
 
@@ -44,14 +46,17 @@ public class Application {
         return new String(new char[n]).replace('\0', str.charAt(0));
     }
 
-    private static String determineWinner(String[] carNames, int[] totalDistances) {
-        String winner = carNames[0];
+    private static List<String> determineWinner(String[] carNames, int[] totalDistances) {
+        List<String> winner = new ArrayList<>();
         int maxDistance = totalDistances[0];
 
         for(int i=1; i < carNames.length; i++) {
             if(totalDistances[i] > maxDistance) {
-                winner = carNames[i];
+                winner.clear();
+                winner.add(carNames[i]);
                 maxDistance = totalDistances[i];
+            } else if (totalDistances[i] == maxDistance) {
+                winner.add(carNames[i]);
             }
         }
 
