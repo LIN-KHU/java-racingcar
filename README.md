@@ -175,3 +175,11 @@ public class Car {
 ## 📝 License
 
 This project is [MIT](https://github.com/woowacourse/java-racingcar-precourse/blob/master/LICENSE) licensed.
+
+---
+
+## ✅ 구현할 기능 목록
+1. 자동차 목록(이름)과 시도 횟수 입력받기
+2. 주어진 시도 횟수번만큼, 각 자동차마다 난수 발생시켜서 조건에 맞는 자동차 전진시키기
+3. 한 시도가 끝날 때마다 모든 자동차 위치 값 현황 출력하기
+4. 모든 시도가 끝나면 위치 최댓값 찾고 해당 위치값 갖는 모든 자동차 이름 출력하기
