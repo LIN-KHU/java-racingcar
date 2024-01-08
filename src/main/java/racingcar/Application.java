@@ -37,7 +37,6 @@ public class Application {
         System.out.println("시도할 회수는 몇회인가요?");
         return Integer.parseInt(Console.readLine());
     }
-
     public static void RunCar(List<Car> cars) {
         int trycount = InputCnt();
         System.out.println("실행 결과");
@@ -48,8 +47,38 @@ public class Application {
             System.out.print("\n");
         }
     }
+
+    public static Integer[] GetPos(List<Car> cars) {
+        List<Integer> position = new ArrayList<>();
+        for (int i = 0; i < cars.size(); i++) {
+            position.add(cars.get(i).Position());
+        }
+        Integer[] posArray = position.toArray(new Integer[position.size()]);
+        Arrays.sort(posArray);
+        return posArray;
+    }
+
+    public static void PrintComma(int winner) {
+        if (winner >= 2) {
+            System.out.print(", ");
+        }
+    }
+    public static void PrintWinner(List<Car> cars) {
+        Integer[] posArray = GetPos(cars);
+        int maxpos = posArray[posArray.length - 1];
+        int winner = 0;
+        for (int i = 0; i < cars.size(); i++) {
+            if (cars.get(i).Position() == maxpos) {
+                winner ++;
+                PrintComma(winner);
+                System.out.print(cars.get(i).Name());
+            }
+        }
+    }
     public static void main(String[] args) {
         List<Car> cars = MakeCar();
         RunCar(cars);
+        System.out.print("최종 우승자 : ");
+        PrintWinner(cars);
     }
 }
