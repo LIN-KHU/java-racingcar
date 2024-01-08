@@ -12,7 +12,8 @@ public class Application {
         // TODO 구현 진행
         System.out.println("경주할 자동차 이름을 입력하세요.(이름은 쉼표(,) 기준으로 구분)");
         List<Car> carList = inputCar();
-        printCar(carList);
+        System.out.println("시도할 회수는 몇회인가요?");
+        int attempts = inputAttempts();
     }
 
     public static List<Car> inputCar() {
@@ -25,15 +26,9 @@ public class Application {
         }
         return carList;
     }
-
-    public static void printCar(List<Car> carList) {
-        for (Car car : carList) {
-            if (car != carList.get(carList.size() - 1)) {
-                System.out.print(car.getName() + ",");
-            }
-            if (car == carList.get(carList.size() - 1)) {
-                System.out.print(car.getName());
-            }
-        }
+    public static int inputAttempts(){
+        String str = Console.readLine();
+        int attempts = Integer.parseInt(str);
+        return attempts;
     }
 }
