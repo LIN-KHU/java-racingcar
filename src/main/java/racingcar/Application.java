@@ -37,8 +37,18 @@ public class Application {
         System.out.println("시도할 회수는 몇회인가요?");
         return Integer.parseInt(Console.readLine());
     }
+
+    public static void RunCar(List<Car> cars) {
+        int trycount = InputCnt();
+        System.out.println("실행 결과");
+        for (int i = 0; i < trycount; i++) {
+            for (int j = 0; j < cars.size(); j++) {
+                cars.get(j).Run();
+            }
+        }
+    }
     public static void main(String[] args) {
         List<Car> cars = MakeCar();
-        int trycount = InputCnt();
+        RunCar(cars);
     }
 }
