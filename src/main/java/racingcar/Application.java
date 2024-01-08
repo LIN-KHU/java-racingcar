@@ -45,6 +45,7 @@ public class Application {
             for (int j = 0; j < cars.size(); j++) {
                 cars.get(j).Run();
             }
+            System.out.print("\n");
         }
     }
     public static void main(String[] args) {
