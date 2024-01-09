@@ -1,10 +1,13 @@
 package racingcar.domain;
 
+import racingcar.util.RaceCountGenerator;
+
 public class Car implements Comparable<Car> {
 
     private static final int MAX_NAME_LENGTH = 5;
     private static final int MOVE_CONDITION = 4;
     private final String name;
+    public RaceCountGenerator raceCountGenerator = new RaceCountGenerator();
     private int position = 0;
 
     public Car(String name) {
@@ -20,6 +23,11 @@ public class Car implements Comparable<Car> {
         }
     }
 
+    public void move() {
+        int number = raceCountGenerator.makeRandomNumber();
+        move(number);
+    }
+
     public String getName() {
         return name;
     }
@@ -31,5 +39,9 @@ public class Car implements Comparable<Car> {
     @Override
     public int compareTo(Car o) {
         return this.getPosition() - o.getPosition();
+    }
+
+    public boolean equalsPosition(Car car) {
+        return this.getPosition() == car.getPosition();
     }
 }

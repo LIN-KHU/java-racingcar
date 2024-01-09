@@ -20,12 +20,15 @@ public class RaceController {
 
         System.out.println("\n실행 결과");
         IntStream.range(0, rounds).forEach(i -> {
-//             TODO: Cars.startRace 메소드로 대체했으므로 버려야 함
-//            moveCars(cars);
+            moveCars(cars);
             raceResult.addRoundResult(cars);
             OutputView.displayRoundProgress(cars);
         });
 
         OutputView.displayWinners(raceResult.getWinners());
+    }
+
+    private void moveCars(List<Car> cars) {
+        cars.forEach(Car::move);
     }
 }
