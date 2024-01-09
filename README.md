@@ -172,6 +172,15 @@ public class Car {
 
 ---
 
+## 구현할 기능 목록
+- 자동차 이름 입력받기
+- 시도 회수 입력받기
+- 시도 회수 만큼 난수 생성 후 조건에 따라 자동차 전진 및 그대로 유지
+- 매 시도가 끝나면 현 진행상황 출력
+- 게임이 끝나면 자동차들의 위치 중 최댓값 찾고 최댓값과 자동차들의 위치를 비교하고 우승한 자동차 이름 출력하기
+
+---
+
 ## 📝 License
 
 This project is [MIT](https://github.com/woowacourse/java-racingcar-precourse/blob/master/LICENSE) licensed.
