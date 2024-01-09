@@ -9,4 +9,15 @@ public class Car {
     }
 
     // 추가 기능 구현
+    String getName() {
+        return this.name;
+    }
+
+    void run() {
+        this.position += 1;
+    }
+
+    int getPosition() {
+        return this.position;
+    }
 }

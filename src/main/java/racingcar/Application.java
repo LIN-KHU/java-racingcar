@@ -17,23 +17,23 @@ public class Application {
         }
     }
 
-    static String[] inputCarName() {
+    static Car[] inputCarName() {
         boolean bool;
-        String[] carNameList;
+        Car[] carList;
         do {
             bool = false;
             System.out.println("경주할 자동차 이름을 입력하세요.(이름은 쉼표(,) 기준으로 구분)");
             String carNameStr = Console.readLine();
-            carNameList = carNameStr.split(",");
+            String[] carNameList = carNameStr.split(",");
+            carList = new Car[carNameList.length];
             for (int i = 0; i< carNameList.length; i++) {
-                String carName = carNameList[i].trim();
-                carNameList[i] = carName;
-                if (checkCarName(carName)) {
+                if (checkCarName(carNameList[i].trim())) {
                     bool = true;
                 }
+                carList[i] = new Car(carNameList[i].trim());
             }
         } while (bool);
-        return carNameList;
+        return carList;
     }
 
     static int inputAttemptCount() {
@@ -59,47 +59,47 @@ public class Application {
         return bar;
     }
 
-    static String getFinalWinner(String[] carNameList, int[] carRunNumList) {
+    static String getFinalWinner(Car[] carList) {
         int maxNum = 0;
         String winner = "";
-        for (int i = 0; i < carRunNumList.length; i++) {
-            if (carRunNumList[i] == maxNum) {
-                winner += ", " + carNameList[i];
+        for (int i = 0; i < carList.length; i++) {
+            if (carList[i].getPosition() == maxNum) {
+                winner += ", " + carList[i].getName();
             }
-            if (carRunNumList[i] > maxNum) {
-                maxNum = carRunNumList[i];
-                winner = carNameList[i];
+            if (carList[i].getPosition() > maxNum) {
+                maxNum = carList[i].getPosition();
+                winner = carList[i].getName();
             }
         }
         return winner;
     }
 
-    static int[]  getEachCarRunNumList(int num, String[] carNameList) {
-        int[] carRunNumList = new int[carNameList.length];
+    static void raceStart(int num, Car[] carList) {
         System.out.println("\n실행 결과");
         for (int i = 0; i < num; i++) {
-            for (int j = 0; j < carNameList.length; j++) {
+            for (int j = 0; j < carList.length; j++) {
                 int ranNum = Randoms.pickNumberInRange(0, 9);
                 if (ranNum >= 4) {
-                    carRunNumList[j] += 1;
+                    carList[j].run();
                 }
-                String bar = makeBar(carRunNumList[j]);
-                System.out.printf("%s : %s\n", carNameList[j], bar);
+                String bar = makeBar(carList[j].getPosition());
+                System.out.printf("%s : %s\n", carList[j].getName(), bar);
             }
             System.out.println();
         }
-        return carRunNumList;
     }
 
     public static void main(String[] args) {
         // TODO 구현 진행
         // 1. 자동차명 입력
-        String[] carNameList = inputCarName();
+        Car[] carList = inputCarName();
+
         // 2. 시도할 수 입력
         int num = inputAttemptCount();
+
         // 3. 실행 결과
-        int[] carRunNumList = getEachCarRunNumList(num, carNameList);
-        String winner = getFinalWinner(carNameList, carRunNumList);
+        raceStart(num, carList);
+        String winner = getFinalWinner(carList);
         System.out.println("최종 우승자 : " + winner);
     }
 }
