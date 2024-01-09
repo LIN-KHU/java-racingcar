@@ -21,13 +21,17 @@ public class Application {
     public static List<Car> inputCar() {
         String str = Console.readLine();
         List<String> carNameList = Arrays.asList(str.split(","));
+        return addCarList(carNameList);
+    }
+
+    public static List<Car> addCarList(List<String> carNameList) {
         List<Car> carList = new ArrayList<>();
         for (String carName : carNameList) {
             try {
                 validateInputCar(carName);
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
-                return inputCar();
+                inputCar();
             }
             Car car = new Car(carName);
             carList.add(car);
@@ -58,7 +62,7 @@ public class Application {
             startGameByAttempts(carList, attempts);
             getWinnerByAttempts(winnerList, carList);
             printResult(carList);
-            carList = makeNewCar(carList);
+            carList = makeNewCar(carList); //새로운 car list 생성
         }
         printFinalWinner(getFinalWinner(winnerList));
     }
@@ -111,9 +115,8 @@ public class Application {
             if (currentPosition > highestPosition) {
                 highestPosition = currentPosition;
                 winnerCarList.clear();
-                winnerCarList.add(car.getName());
             }
-            if (currentPosition == highestPosition) {
+            if (currentPosition >= highestPosition) {
                 winnerCarList.add(car.getName());
             }
         }
@@ -127,25 +130,23 @@ public class Application {
                 carWinnerMap.put(carName, carWinnerMap.getOrDefault(carName, 0) + 1);
             }
         }
-        int maxCarWinner = Collections.max(carWinnerMap.values());
+        int maxCarWinCnt = Collections.max(carWinnerMap.values());
+        return getFinalWinnerList(carWinnerMap, maxCarWinCnt);
+    }
+
+    public static List<String> getFinalWinnerList(Map<String, Integer> carWinnerMap, int maxCarWinCnt) {
         List<String> finalWinnerList = new ArrayList<>();
         carWinnerMap.forEach((key, value) -> {
-            if (value == maxCarWinner) {
+            if (value == maxCarWinCnt) {
                 finalWinnerList.add(key);
             }
-        } );
+        });
         return finalWinnerList;
     }
 
     public static void printFinalWinner(List<String> finalWinnerList) {
         System.out.print("최종 우승자 : ");
-        for (String str : finalWinnerList) {
-            if (str != finalWinnerList.get(finalWinnerList.size() - 1)) {
-                System.out.print(str + ", ");
-            }
-            if (str == finalWinnerList.get(finalWinnerList.size() - 1)) {
-                System.out.print(str);
-            }
-        }
+        String result = String.join(", ", finalWinnerList);
+        System.out.println(result);
     }
 }
