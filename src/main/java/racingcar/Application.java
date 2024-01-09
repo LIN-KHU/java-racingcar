@@ -3,9 +3,7 @@ package racingcar;
 import camp.nextstep.edu.missionutils.Console;
 import camp.nextstep.edu.missionutils.Randoms;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class Application {
     private static final String ERROR_MESSAGE = "[ERROR]";
@@ -25,9 +23,9 @@ public class Application {
         List<String> carNameList = Arrays.asList(str.split(","));
         List<Car> carList = new ArrayList<>();
         for (String carName : carNameList) {
-            try{
+            try {
                 validateInputCar(carName);
-            }catch(IllegalArgumentException e){
+            } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
                 return inputCar();
             }
@@ -58,12 +56,11 @@ public class Application {
         List<List<String>> winnerList = new ArrayList<>();
         for (int i = 0; i < attempts; i++) {
             startGameByAttempts(carList, attempts);
-            /**
-             * TODO 우승자 저장
-             */
+            getWinnerByAttempts(winnerList, carList);
             printResult(carList);
             carList = makeNewCar(carList);
         }
+        printFinalWinner(getFinalWinner(winnerList));
     }
 
     public static void startGameByAttempts(List<Car> carList, int attempts) {
@@ -101,11 +98,54 @@ public class Application {
         return newCarList;
     }
 
-    public static void checkWinnerByAttempts(List<List<String>> winnerList, List<Car> car) {
-
+    public static void getWinnerByAttempts(List<List<String>> winnerList, List<Car> carList) {
+        List<String> winnerCarListByAttempts = getWinnerList(carList);
+        winnerList.add(winnerCarListByAttempts);
     }
 
-    public static void getWinnerList(List<Car> car) {
+    public static List<String> getWinnerList(List<Car> carList) {
+        int highestPosition = carList.get(0).getPosition();
+        List<String> winnerCarList = new ArrayList<>();
+        for (Car car : carList) {
+            int currentPosition = car.getPosition();
+            if (currentPosition > highestPosition) {
+                highestPosition = currentPosition;
+                winnerCarList.clear();
+                winnerCarList.add(car.getName());
+            }
+            if (currentPosition == highestPosition) {
+                winnerCarList.add(car.getName());
+            }
+        }
+        return winnerCarList;
+    }
 
+    public static List<String> getFinalWinner(List<List<String>> winnerList) {
+        Map<String, Integer> carWinnerMap = new HashMap<>();
+        for (List<String> carNameList : winnerList) {
+            for (String carName : carNameList) {
+                carWinnerMap.put(carName, carWinnerMap.getOrDefault(carName, 0) + 1);
+            }
+        }
+        int maxCarWinner = Collections.max(carWinnerMap.values());
+        List<String> finalWinnerList = new ArrayList<>();
+        carWinnerMap.forEach((key, value) -> {
+            if (value == maxCarWinner) {
+                finalWinnerList.add(key);
+            }
+        } );
+        return finalWinnerList;
+    }
+
+    public static void printFinalWinner(List<String> finalWinnerList) {
+        System.out.print("최종 우승자 : ");
+        for (String str : finalWinnerList) {
+            if (str != finalWinnerList.get(finalWinnerList.size() - 1)) {
+                System.out.print(str + ", ");
+            }
+            if (str == finalWinnerList.get(finalWinnerList.size() - 1)) {
+                System.out.print(str);
+            }
+        }
     }
 }
