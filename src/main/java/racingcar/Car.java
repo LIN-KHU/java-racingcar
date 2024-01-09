@@ -19,11 +19,11 @@ public class Car {
         System.out.print("\n");
     }
 
-    public int Position() {
+    public int getPosition() {
         return this.position;
     }
 
-    public String Name() {
+    public String getName() {
         return this.name;
     }
 }
