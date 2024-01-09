@@ -25,6 +25,12 @@ public class Cars {
         cars.forEach(car -> car.move(raceCountGenerator.makeRandomNumber()));
     }
 
+    public Car getMaxPositionCar() {
+        return cars.stream()
+                .max(Car::compareTo)
+                .orElseThrow(() -> new IllegalArgumentException("차량 리스트가 없습니다."));
+    }
+
     private List<Car> create(String carNames) {
         String[] names = carNames.split(",");
         return Arrays.stream(names)
