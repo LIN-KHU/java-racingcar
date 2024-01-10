@@ -9,4 +9,16 @@ public class Car {
     }
 
     // 추가 기능 구현
+    public void move() {
+        int randomNumber = RandomNum.randomNum();
+        if (randomNumber >= 4) {
+            position++;
+        }
+    }
+
+    public int getPosition() {
+        return position;
+    }
+
 }
+
