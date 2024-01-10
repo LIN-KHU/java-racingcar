@@ -62,7 +62,7 @@ public class Application {
 
     public static void PrintWinner(List<Car> cars) {
         List<Integer> posList = GetPos(cars);
-        int maxpos = posList.get(posList.size() - 1);
+        int maxpos = Collections.max(posList);
         int winner = 0;
         StringJoiner sj = new StringJoiner(", ");
         for (Car c : cars) {
@@ -77,7 +77,6 @@ public class Application {
         for (Car c : cars) {
             position.add(c.getPosition());
         }
-        Collections.sort(position);
         return position;
     }
 }
