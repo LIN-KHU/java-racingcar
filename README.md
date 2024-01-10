@@ -181,7 +181,7 @@ This project is [MIT](https://github.com/woowacourse/java-racingcar-precourse/bl
 ## ✅ 구현할 기능 목록
 1. 자동차 이름을 입력 받는다.
 
-     1-1. [조건] 0~5자가 아닌 이름이 있다면 다시 입력 받는다.
+     1-1. [조건] 1~5자가 아닌 이름이 있다면 다시 입력 받는다.
 
 2. 입력 받은 이름을 갖는 자동차들을 만든다.
 3. 시도 횟수를 입력받는다.
