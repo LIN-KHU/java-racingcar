@@ -10,7 +10,7 @@ public class Car {
         this.name = name;
     }
 
-    public void Run() {
+    public void run() {
         if(Randoms.pickNumberInRange(0,10) >= 4) position++;
         System.out.print(this.name+" : ");
         for(int i = 0; i < position; i++) {
