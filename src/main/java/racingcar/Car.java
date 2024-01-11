@@ -13,8 +13,10 @@ public class Car {
         return this.name;
     }
 
-    void run() {
-        this.position += 1;
+    void move(int num) {
+        if (num > 3) {
+            this.position++;
+        }
     }
 
     int getPosition() {
