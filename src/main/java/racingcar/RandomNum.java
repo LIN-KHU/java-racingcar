@@ -5,4 +5,5 @@ public class RandomNum {
     {
         return Randoms.pickNumberInRange(1, 9);
     }
+
 }
