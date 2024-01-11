@@ -42,6 +42,28 @@ public class Application {
         return setCars(cars);
     }
 
+    private static void getWinner(Car[] carArray){
+        List<String> winnerList = new ArrayList<String>();
+        int max = carArray[0].getPosition();
+
+        //max 값 구하기
+        for (int i = 1; i < carArray.length; i++) {
+            if (carArray[i].getPosition() > max) {
+                max = carArray[i].getPosition();
+            }
+        }
+
+        for (Car car : carArray) {
+            if (car.getPosition() == max) {
+                winnerList.add(car.getName());
+            }
+        }
+
+        String winner = String.join(",", winnerList);
+
+        System.out.println("최종 우승자 : " + winner + max);
+    }
+
     private static void startCount(Integer count, Car[] carArray) {
 
         System.out.println("실행 결과");
