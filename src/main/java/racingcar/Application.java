@@ -8,26 +8,29 @@ import camp.nextstep.edu.missionutils.Randoms;
 
 public class Application {
     public static void main(String[] args) {
-        System.out.println("경주할 자동차 이름을 입력하세요. (이름은 쉼표(,)로 구분)");
-        String inputNames = Console.readLine();
-        String[] carNames = inputNames.split(",");
 
-        if(!checkNameLength(carNames)) {
-            return;
-        }
+        String[] carNames = getValidCarNames();
 
-        int attemps = getAttempts();
-
+        int attempts = getAttempts();
         Car[] cars = initializeCars(carNames);
 
-        System.out.println("\n실행 결과");
-        for(int attempt =0; attempt < attemps; attempt++) {
-            moveCars(cars);
-            printCarStatus(cars);
-        }
+        runRaceSimulation(attempts, cars);
 
         List<String> winners = determineWinners(cars);
         System.out.println("\n최종 우승자: " + winners);
+    }
+
+    private static String[] getValidCarNames() {
+        String[] carNames;
+
+        do {
+            System.out.println("경주할 자동차 이름을 입력하세요. (이름은 쉼표(,)로 구분)");
+            String inpuNames = Console.readLine();
+            carNames = inpuNames.split(",");
+        } while(!checkNameLength(carNames));
+
+        return carNames;
+
     }
 
     private static boolean checkNameLength(String[] carNames) {
@@ -38,6 +41,15 @@ public class Application {
             }
         }
         return true;
+    }
+
+    private static void runRaceSimulation(int attemps, Car[] cars) {
+        System.out.println("\n실행 결과");
+        for(int attempt =0; attempt < attemps; attempt++) {
+            moveCars(cars);
+            printCarStatus(cars);
+        }
+
     }
 
     private static int getAttempts() {
