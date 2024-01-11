@@ -18,7 +18,7 @@ public class Winner {
         }
         System.out.println(sj.toString());
     }
-    public static List<Integer> getPosList(List<Car> cars) {
+    private static List<Integer> getPosList(List<Car> cars) {
         List<Integer> posList = new ArrayList<>();
         for (Car c : cars) {
             posList.add(c.getPosition());

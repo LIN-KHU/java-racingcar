@@ -11,14 +11,14 @@ public class Race {
         }
     }
 
-    public static void runCarsInList(List<Car> cars) {
+    private static void runCarsInList(List<Car> cars) {
         for (Car c : cars) {
             c.run();
         }
         System.out.print("\n");
     }
 
-    public static int inputTryCnt() {
+    private static int inputTryCnt() {
         System.out.println("시도할 회수는 몇회인가요?");
         return Integer.parseInt(Console.readLine());
     }

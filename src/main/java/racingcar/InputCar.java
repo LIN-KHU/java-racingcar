@@ -15,7 +15,7 @@ public class InputCar {
         return cars;
     }
 
-    public static String[] inputName() {
+    private static String[] inputName() {
         while (true) {
             System.out.println("경주할 자동차 이름을 입력하세요.(이름은 쉼표(,) 기준으로 구분)");
             String carName = Console.readLine();
@@ -28,7 +28,7 @@ public class InputCar {
             }
         }
     }
-    public static void inputError(String[] arr) {
+    private static void inputError(String[] arr) {
         for (String str : arr) {
             if (str.isEmpty() || (str.length() >= 6)) {
                 throw new IllegalArgumentException("[ERROR] 자동차 이름이 비어있거나 6자 이상임");
