@@ -13,10 +13,11 @@ public class Car {
     public void run() {
         if(Randoms.pickNumberInRange(0,10) >= 4) position++;
         System.out.print(this.name+" : ");
+        StringBuilder sb = new StringBuilder();
         for(int i = 0; i < position; i++) {
-            System.out.print("-");
+            sb.append("-");
         }
-        System.out.print("\n");
+        System.out.print(sb+"\n");
     }
 
     public int getPosition() {
