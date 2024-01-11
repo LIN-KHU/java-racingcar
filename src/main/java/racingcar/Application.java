@@ -44,22 +44,20 @@ public class Application {
         List<Car> carList = new ArrayList<>();
         String[] carNameList = inputCarName();
         for (String carName:carNameList) {
-            carList.add(new Car(carName));
+            carList.add(new Car(carName.trim()));
         }
         return carList;
     }
 
     private static int inputAttemptCount() {
-        int num;
-        while (true) {
-            System.out.println("시도할 회수는 몇회인가요?");
-            String numStr = Console.readLine();
-            try {
-                num = Integer.parseInt(numStr);
-                break;
-            } catch (IllegalArgumentException e) {
-                System.out.println("[ERROR] 시도 횟수는 숫자여야 한다.");
-            }
+        int num = 0;
+        System.out.println("시도할 회수는 몇회인가요?");
+        String numStr = Console.readLine();
+        try {
+            num = Integer.parseInt(numStr);
+        } catch (IllegalArgumentException e) {
+            System.out.println("[ERROR] 시도 횟수는 숫자여야 한다.");
+            inputAttemptCount();
         }
         return num;
     }
