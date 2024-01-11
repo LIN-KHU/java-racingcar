@@ -16,7 +16,9 @@ public class Car {
         return position;
     }
 
-    public void move() {
-        position++;
+    public void move(int num) {
+        if (num>3) {
+            this.position++;
+        }
     }
 }

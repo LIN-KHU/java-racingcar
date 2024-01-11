@@ -1,7 +1,10 @@
 package racingcar;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import camp.nextstep.edu.missionutils.Console;
 import camp.nextstep.edu.missionutils.Randoms;
@@ -9,77 +12,45 @@ import camp.nextstep.edu.missionutils.Randoms;
 public class Application {
     public static void main(String[] args) {
 
-        String[] carNames = getValidCarNames();
+        String[] carNames = getInput("경주할 자동차 이름을 입력하세요. (이름은 쉼표(,)로 구분)", s -> s.split(","), "[ERROR] 각 자동차의 이름은 5자 이하여야 합니다.");
+        int attempts = getInput("시도할 횟수는 몇 회인가요?", Integer::parseInt, "[ERROR] 시도 횟수는 숫자여야 합니다.");
 
-        int attempts = getAttempts();
         Car[] cars = initializeCars(carNames);
 
-        runRaceSimulation(attempts, cars);
+        System.out.println("\n실행 결과");
+        for(int attempt = 0; attempt < attempts; attempt++) {
+            moveCars(cars);
+            printCarStatus(cars);
+        }
 
         List<String> winners = determineWinners(cars);
         System.out.println("\n최종 우승자: " + winners);
     }
 
-    private static String[] getValidCarNames() {
-        String[] carNames;
-
+    private static <T> T getInput(String prompt, Function<String, T> parser, String errorMessage) {
+        T input;
         do {
-            System.out.println("경주할 자동차 이름을 입력하세요. (이름은 쉼표(,)로 구분)");
-            String inpuNames = Console.readLine();
-            carNames = inpuNames.split(",");
-        } while(!checkNameLength(carNames));
-
-        return carNames;
-
-    }
-
-    private static boolean checkNameLength(String[] carNames) {
-        for(String carName : carNames) {
-            if(carName.length() > 5) {
-                System.out.println("[ERROR] 각 자동차의 이름은 5자 이하여야 합니다.");
-                return false;
+            try {
+                System.out.println(prompt);
+                String userInput = Console.readLine();
+                input = parser.apply(userInput);
+                return input;
+            } catch (Exception e) {
+                System.out.println(errorMessage);
             }
-        }
-        return true;
-    }
-
-    private static void runRaceSimulation(int attemps, Car[] cars) {
-        System.out.println("\n실행 결과");
-        for(int attempt =0; attempt < attemps; attempt++) {
-            moveCars(cars);
-            printCarStatus(cars);
-        }
-
-    }
-
-    private static int getAttempts() {
-        int attemps = 0;
-        do {
-            try{
-                System.out.println("시도할 횟수는 몇 회인가요?");
-                attemps = Integer.parseInt(Console.readLine());
-                break;
-            } catch (NumberFormatException e) {
-                System.out.println("[ERROR] 시도 횟수는 숫자여야 합니다.");
-            }
-        } while(true);
-        return attemps;
+        } while (true);
     }
 
     private static Car[] initializeCars(String[] carNames) {
-        Car[] cars = new Car[carNames.length];
-        for(int i =0; i< carNames.length; i++) {
-            cars[i] = new Car(carNames[i]);
-        }
-        return cars; 
+        List<Car> validCars = Arrays.stream(carNames).filter(name -> name.length() <=5).map(Car::new).collect(Collectors.toList());
+        return validCars.toArray(new Car[0]);
     }
+    //less than 5 word carNames can be saved as Car object
 
     private static void moveCars(Car[] cars) {
         for(Car car : cars) {
             int randomCount = Randoms.pickNumberInRange(1, 10);
-            if(randomCount >3) {
-                car.move();
-            }
+            car.move(randomCount);
         }
     }
 
@@ -94,15 +65,27 @@ public class Application {
         List<String> winners = new ArrayList<>();
         int maxDistance = cars[0].getPosition();
 
-        for (int i =1 ; i<cars.length; i++) {
+        if (cars[0].getName().length() <=5) {
+            winners.add(cars[0].getName());
+        }
+
+        for (int i =1 ; i < cars.length; i++) {
             if(cars[i].getPosition() > maxDistance) {
                 winners.clear();
                 winners.add(cars[i].getName());
                 maxDistance = cars[i].getPosition();
-            } else if (cars[i].getPosition() == maxDistance) {
+                continue;
+            }
+            
+            if (cars[i].getPosition() == maxDistance) {
                 winners.add(cars[i].getName());
             }
         }
+
+        if (winners.isEmpty()) {
+            winners.add(cars[0].getName());
+        }
+        
         return winners;
     }
 
