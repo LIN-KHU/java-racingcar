@@ -2,6 +2,12 @@ package racingcar;
 
 import camp.nextstep.edu.missionutils.Console;
 import camp.nextstep.edu.missionutils.Randoms;
+import racingcar.domain.Car;
+
+import java.util.ArrayList;
+import java.util.List;
+
+
 public class Application {
     public static void main(String[] args) {
 
@@ -34,6 +40,25 @@ public class Application {
         System.out.println("경주할 자동차 이름을 입력하세요.(이름은 쉼표(,) 기준으로 구분)");
         String cars = Console.readLine(); //String
         return setCars(cars);
+    }
+
+    private static void startCount(Integer count, Car[] carArray) {
+
+        System.out.println("실행 결과");
+        for(int i = 0; i < count; i++) {
+            for(int j = 0; j < carArray.length; j++) {
+                moveCar(carArray[j]);
+            }
+            System.out.println();
+        }
+    }
+
+    private static void moveCar(Car car) {
+
+        int randomNum = Randoms.pickNumberInRange(1,9); //숫자 랜덤으로 받음
+        if(randomNum >= 4) {car.move();} //숫자가 4 이상인 경우 전진
+        car.printCar();
+
     }
 
     private static Car[] setCars(String cars){
