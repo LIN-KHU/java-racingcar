@@ -50,31 +50,28 @@ public class Application {
         }
     }
 
-    public static Integer[] getPosition(List<Car> CarsList) {
+    public static Integer getMaxPosition(List<Car> CarsList) {
         List<Integer> positions = new ArrayList<>();
         for (Car car : CarsList) {
             positions.add(car.getPosition());
         }
-        Integer[] positionsArray = positions.toArray(new Integer[0]); // positions 리스트의 길이를 가진 Array 새롭게 생성 어차피 0과 positions의 길이를 비교한 후 큰 값으로 생성됨
-        Arrays.sort(positionsArray);
-        return positionsArray;
+        return Collections.max(positions);
     }
 
-    public static void printMultipleWinners(int winnercount) {
-        if (winnercount > 1) {
+    public static void printMultipleWinners(int winnersCount) {
+        if (winnersCount > 1) {
             System.out.print(", ");
         }
     }
 
     public static void printWinners(List<Car>CarsList) {
-        Integer[] positionsArray = getPosition(CarsList);
-        int winnercount = 0;
-        int maxposition = positionsArray[positionsArray.length - 1];
+        int winnersCount = 0;
+        int maxPosition = getMaxPosition(CarsList);
         System.out.print("최종 우승자 : ");
         for (Car car : CarsList) {
-            if (car.getPosition() == maxposition) {
-                winnercount++;
-                printMultipleWinners(winnercount);
+            if (car.getPosition() == maxPosition) {
+                winnersCount++;
+                printMultipleWinners(winnersCount);
                 System.out.print(car.getName());
             }
         }
