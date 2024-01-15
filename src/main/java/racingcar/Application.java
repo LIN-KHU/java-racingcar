@@ -10,29 +10,32 @@ public class Application {
 
     public static void main(String[] args) {
         // TODO 구현 진행
-        System.out.println("경주할 자동차 이름을 입력하세요.(이름은 쉼표(,) 기준으로 구분)");
         List<Car> carList = inputCar();
-        System.out.println("시도할 회수는 몇회인가요?");
         int attempts = inputAttempts();
-        System.out.println("\n실행 결과");
         startRacing(carList, attempts);
+        printFinalWinner(getWinnerList(carList));
     }
 
     public static List<Car> inputCar() {
-        String str = Console.readLine();
-        List<String> carNameList = Arrays.asList(str.split(","));
-        return addCarList(carNameList);
-    }
-
-    public static List<Car> addCarList(List<String> carNameList) {
-        List<Car> carList = new ArrayList<>();
-        for (String carName : carNameList) {
+        System.out.println("경주할 자동차 이름을 입력하세요.(이름은 쉼표(,) 기준으로 구분)");
+        List<Car> carList;
+        while (true) {
+            String str = Console.readLine();
+            List<String> carNameList = Arrays.asList(str.split(","));
             try {
-                validateInputCar(carName);
+                carList = makeCars(carNameList);
+                break;
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
-                inputCar();
             }
+        }
+        return carList;
+    }
+
+    public static List<Car> makeCars(List<String> carNameList) {
+        List<Car> carList = new ArrayList<>();
+        for (String carName : carNameList) {
+            validateInputCar(carName);
             Car car = new Car(carName);
             carList.add(car);
         }
@@ -46,36 +49,35 @@ public class Application {
     }
 
     public static int inputAttempts() {
-        try {
-            String str = Console.readLine();
-            int attempts = Integer.parseInt(str);
-            return attempts;
-        } catch (NumberFormatException e) {
-            System.out.println(ERROR_MESSAGE + " 시도 횟수는 숫자여야 한다.");
-            return inputAttempts();
+        System.out.println("시도할 회수는 몇회인가요?");
+        int attempts;
+        while (true) {
+            try {
+                String str = Console.readLine();
+                attempts = Integer.parseInt(str);
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println(ERROR_MESSAGE + " 시도 횟수는 숫자여야 한다.");
+            }
         }
+        return attempts;
     }
 
     public static void startRacing(List<Car> carList, int attempts) {
-        List<List<String>> winnerList = new ArrayList<>();
+        System.out.println("\n실행 결과");
         for (int i = 0; i < attempts; i++) {
             startGameByAttempts(carList, attempts);
-            getWinnerByAttempts(winnerList, carList);
             printResult(carList);
-            carList = makeNewCar(carList); //새로운 car list 생성
         }
-        printFinalWinner(getFinalWinner(winnerList));
     }
 
     public static void startGameByAttempts(List<Car> carList, int attempts) {
-        for (int i = 0; i < attempts; i++) {
-            for (Car car : carList) {
-                checkRandomNum(car);
-            }
+        for (Car car : carList) {
+            moveCar(car);
         }
     }
 
-    public static void checkRandomNum(Car car) {
+    public static void moveCar(Car car) {
         int randomNum = Randoms.pickNumberInRange(0, 9);
         if (randomNum >= 4) {
             car.moveCar();
@@ -93,60 +95,25 @@ public class Application {
         System.out.println("");
     }
 
-    public static List<Car> makeNewCar(List<Car> carList) {
-        List<Car> newCarList = new ArrayList<>();
-        for (Car carIdx : carList) {
-            Car car = new Car(carIdx.getName());
-            newCarList.add(car);
-        }
-        return newCarList;
-    }
-
-    public static void getWinnerByAttempts(List<List<String>> winnerList, List<Car> carList) {
-        List<String> winnerCarListByAttempts = getWinnerList(carList);
-        winnerList.add(winnerCarListByAttempts);
+    public static void printFinalWinner(List<String> winnerCarList) {
+        System.out.print("최종 우승자 : ");
+        String result = String.join(", ", winnerCarList);
+        System.out.println(result);
     }
 
     public static List<String> getWinnerList(List<Car> carList) {
-        int highestPosition = carList.get(0).getPosition();
+        int maxCarPosition = carList.get(0).getPosition();
         List<String> winnerCarList = new ArrayList<>();
         for (Car car : carList) {
             int currentPosition = car.getPosition();
-            if (currentPosition > highestPosition) {
-                highestPosition = currentPosition;
+            if (currentPosition > maxCarPosition) {
+                maxCarPosition = currentPosition;
                 winnerCarList.clear();
             }
-            if (currentPosition >= highestPosition) {
+            if (currentPosition >= maxCarPosition) {
                 winnerCarList.add(car.getName());
             }
         }
         return winnerCarList;
-    }
-
-    public static List<String> getFinalWinner(List<List<String>> winnerList) {
-        Map<String, Integer> carWinnerMap = new HashMap<>();
-        for (List<String> carNameList : winnerList) {
-            for (String carName : carNameList) {
-                carWinnerMap.put(carName, carWinnerMap.getOrDefault(carName, 0) + 1);
-            }
-        }
-        int maxCarWinCnt = Collections.max(carWinnerMap.values());
-        return getFinalWinnerList(carWinnerMap, maxCarWinCnt);
-    }
-
-    public static List<String> getFinalWinnerList(Map<String, Integer> carWinnerMap, int maxCarWinCnt) {
-        List<String> finalWinnerList = new ArrayList<>();
-        carWinnerMap.forEach((key, value) -> {
-            if (value == maxCarWinCnt) {
-                finalWinnerList.add(key);
-            }
-        });
-        return finalWinnerList;
-    }
-
-    public static void printFinalWinner(List<String> finalWinnerList) {
-        System.out.print("최종 우승자 : ");
-        String result = String.join(", ", finalWinnerList);
-        System.out.println(result);
     }
 }
