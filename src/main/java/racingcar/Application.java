@@ -3,7 +3,7 @@ import java.util.*;
 import camp.nextstep.edu.missionutils.Console;
 
 public class Application {
-    public static String[] GetNames() {
+    public static String[] getNames() {
         while(true) {
             System.out.println("경주할 자동차 이름을 입력하세요.(이름은 쉼표(,) 기준으로 구분)");
             String carNames = Console.readLine();
@@ -25,13 +25,13 @@ public class Application {
         }
     }
 
-    public static int GetCount() {
+    public static int getCount() {
         System.out.println("시도할 회수는 몇회인가요?");
         return Integer.parseInt(Console.readLine());
     }
 
-    public static List<Car> CreateCars() {
-        String[] carList = GetNames();
+    public static List<Car> createCars() {
+        String[] carList = getNames();
         List<Car> Cars = new ArrayList<>();
         for (String car : carList) {
             Cars.add(new Car(car));
@@ -39,8 +39,8 @@ public class Application {
         return Cars;
     }
 
-    public static void PlayGame(List<Car> CarsList) {
-        int count = GetCount();
+    public static void playGame(List<Car> CarsList) {
+        int count = getCount();
         System.out.println("\n실행 결과");
         for (int i = 0; i < count; i++) {
             for (Car car : CarsList) {
@@ -50,7 +50,7 @@ public class Application {
         }
     }
 
-    public static Integer[] GetPosition(List<Car> CarsList) {
+    public static Integer[] getPosition(List<Car> CarsList) {
         List<Integer> positions = new ArrayList<>();
         for (Car car : CarsList) {
             positions.add(car.Position());
@@ -60,29 +60,29 @@ public class Application {
         return positionsArray;
     }
 
-    public static void multiplewinners(int winnercount) {
+    public static void printMultipleWinners(int winnercount) {
         if (winnercount > 1) {
             System.out.print(", ");
         }
     }
 
-    public static void PrintWinners(List<Car>CarsList) {
-        Integer[] positionsArray = GetPosition(CarsList);
+    public static void printWinners(List<Car>CarsList) {
+        Integer[] positionsArray = getPosition(CarsList);
         int winnercount = 0;
         int maxposition = positionsArray[positionsArray.length - 1];
         System.out.print("최종 우승자 : ");
         for (Car car : CarsList) {
             if (car.Position() == maxposition) {
                 winnercount++;
-                multiplewinners(winnercount);
+                printMultipleWinners(winnercount);
                 System.out.print(car.Name());
             }
         }
     }
 
     public static void main(String[] args) {
-        List<Car> Cars = CreateCars();
-        PlayGame(Cars);
-        PrintWinners(Cars);
+        List<Car> Cars = createCars();
+        playGame(Cars);
+        printWinners(Cars);
     }
 }
