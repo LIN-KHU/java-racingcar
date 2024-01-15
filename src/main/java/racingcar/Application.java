@@ -53,7 +53,7 @@ public class Application {
     public static Integer[] getPosition(List<Car> CarsList) {
         List<Integer> positions = new ArrayList<>();
         for (Car car : CarsList) {
-            positions.add(car.Position());
+            positions.add(car.getPosition());
         }
         Integer[] positionsArray = positions.toArray(new Integer[0]); // positions 리스트의 길이를 가진 Array 새롭게 생성 어차피 0과 positions의 길이를 비교한 후 큰 값으로 생성됨
         Arrays.sort(positionsArray);
@@ -72,10 +72,10 @@ public class Application {
         int maxposition = positionsArray[positionsArray.length - 1];
         System.out.print("최종 우승자 : ");
         for (Car car : CarsList) {
-            if (car.Position() == maxposition) {
+            if (car.getPosition() == maxposition) {
                 winnercount++;
                 printMultipleWinners(winnercount);
-                System.out.print(car.Name());
+                System.out.print(car.getName());
             }
         }
     }
@@ -85,4 +85,5 @@ public class Application {
         playGame(Cars);
         printWinners(Cars);
     }
+
 }

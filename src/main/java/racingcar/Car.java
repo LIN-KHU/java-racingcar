@@ -19,10 +19,13 @@ public class Car {
         }
         System.out.print("\n");
     }
-    public String Name() {
+
+    public String getName() {
         return this.name;
     }
-    public int Position() {
+
+    public int getPosition() {
         return this.position;
     }
+
 }
