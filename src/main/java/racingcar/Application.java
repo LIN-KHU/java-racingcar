@@ -9,7 +9,7 @@ public class Application {
             String carNames = Console.readLine();
             String[] carNameList = carNames.split(",");
             try {
-                checkError(carNameList);
+                validateName(carNameList);
                 return carNameList;
             } catch (IllegalArgumentException error) {
                 System.out.println(error.getMessage());
@@ -17,7 +17,7 @@ public class Application {
         }
     }
 
-    public static void checkError(String[] CarsList) {
+    public static void validateName(String[] CarsList) {
         for (String str : CarsList) {
             if (str.isEmpty() || str.length() >= 6) { //5자 이하여야 하나 공백 역시 허용 안됨
                 throw new IllegalArgumentException("[ERROR] 자동차의 이름은 5자 이하여야 합니다");
