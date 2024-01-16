@@ -10,7 +10,6 @@ public class Car {
         this.name = name;
     }
 
-    // 추가 기능 구현
     public void move() {
         position++;
     }
