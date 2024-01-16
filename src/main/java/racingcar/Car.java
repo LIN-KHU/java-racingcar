@@ -9,4 +9,17 @@ public class Car {
     }
 
     // 추가 기능 구현
+    String getName() {
+        return this.name;
+    }
+
+    void move(int num) {
+        if (num > 3) {
+            this.position++;
+        }
+    }
+
+    int getPosition() {
+        return this.position;
+    }
 }
