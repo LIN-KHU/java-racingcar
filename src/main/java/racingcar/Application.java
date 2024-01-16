@@ -2,6 +2,7 @@ package racingcar;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.StringJoiner;
 
 public class Application {
     public static void main(String[] args) {
@@ -77,10 +78,12 @@ public class Application {
         for (int i = 0; i < Try; i++) {
             for (int j = 0; j < Cars.length; j++) {
                 if ((int)(Math.random() * 10) >= 4){
-                    Cars[j].SetCarPosition(Cars[j].GetCarPosition() + 1);
+                    Cars[j].setCarPosition(Cars[j].getCarPosition() + 1);
                 }
                 // 각 차수별 실행 결과 출력
-                System.out.println(Cars[j].GetCarName() + " : " + new String(new char[Cars[j].GetCarPosition()]).replace("\0", "-"));
+                // "-" 붙일 길이 지정
+                char[] length = new char[Cars[j].getCarPosition()];
+                System.out.println(Cars[j].getCarName() + " : " + new String(length).replace("\0", "-"));
             }
             System.out.println("");
         }
@@ -89,28 +92,20 @@ public class Application {
         // 모든 Cars 배열을 돌며 최대값 구하기
         int max = 0;
         for (int i = 0; i < Cars.length; i++) {
-            if (Cars[i].GetCarPosition() > max){
-                max = Cars[i].GetCarPosition();
+            if (Cars[i].getCarPosition() > max){
+                max = Cars[i].getCarPosition();
             }
         }
         // 최댓값을 배열 내의 포지션을 비교하여 최대값과 같은 차의 이름을 스트링 배열에 저장
-        String str = "";
+        StringJoiner sj = new StringJoiner(", ");
         for (int i = 0; i < Cars.length; i++) {
-            if (Cars[i].GetCarPosition() == max){
-                str = str + Integer.toString(i);
+            if (Cars[i].getCarPosition() == max){
+                sj.add(Cars[i].getCarName());
             }
         }
+        String Result = sj.toString();
+        System.out.print("최종 우승자 : " + Result);
 
-        System.out.print("최종 우승자 : ");
-        if (str.length() == 1){
-            System.out.println(Cars[Integer.parseInt(str)].GetCarName());
-        }
-        else{
-            System.out.print(Cars[str.charAt(0) - '0'].GetCarName());
-            for (int i = 1; i < str.length(); i++) {
-                System.out.print(", " + Cars[str.charAt(i) - '0'].GetCarName());
-            }
-        }
     }
 
 }

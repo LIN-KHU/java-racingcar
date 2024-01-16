@@ -9,7 +9,7 @@ public class Car {
     }
 
     // 추가 기능 구현
-    public String GetCarName() { return this.name; }
-    public void SetCarPosition(int i) { this.position = i; }
-    public int GetCarPosition() { return this.position; }
+    public String getCarName() { return this.name; }
+    public void setCarPosition(int i) { this.position = i; }
+    public int getCarPosition() { return this.position; }
 }
